@@ -3,9 +3,12 @@ package com.pedrosa.dscatalog.services;
 import com.pedrosa.dscatalog.dto.CategoryDTO;
 import com.pedrosa.dscatalog.entities.Category;
 import com.pedrosa.dscatalog.repositories.CategoryRepository;
+import com.pedrosa.dscatalog.services.exceptions.DataBaseException;
 import com.pedrosa.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +56,19 @@ public class CategoryService {
             entity = repository.save(entity);
             return new CategoryDTO(entity);
         } catch(EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Id not found" + id);
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+    }
+
+    public void delete(Long id) {
+        if (repository.existsById(id)) {
+            try {
+                repository.deleteById(id);
+            } catch (DataIntegrityViolationException e) {
+                throw new DataBaseException("Integrity violation");
+            }
+        } else {
+            throw new ResourceNotFoundException("Id not found " + id);
         }
     }
 }
