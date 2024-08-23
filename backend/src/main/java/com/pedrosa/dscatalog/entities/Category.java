@@ -23,8 +23,6 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    //private Set<Product> = HashSet<>();
-
     public Category() { }
 
     public Category(Long id, String name) {
