@@ -1,13 +1,7 @@
 package com.pedrosa.dscatalog.services;
 
-import com.pedrosa.dscatalog.dto.ProductDTO;
-import com.pedrosa.dscatalog.entities.Category;
-import com.pedrosa.dscatalog.entities.Product;
-import com.pedrosa.dscatalog.repositories.CategoryRepository;
-import com.pedrosa.dscatalog.repositories.ProductRepository;
-import com.pedrosa.dscatalog.services.exceptions.DataBaseException;
-import com.pedrosa.dscatalog.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -15,7 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.pedrosa.dscatalog.dto.ProductDTO;
+import com.pedrosa.dscatalog.entities.Category;
+import com.pedrosa.dscatalog.entities.Product;
+import com.pedrosa.dscatalog.repositories.CategoryRepository;
+import com.pedrosa.dscatalog.repositories.ProductRepository;
+import com.pedrosa.dscatalog.services.exceptions.DataBaseException;
+import com.pedrosa.dscatalog.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -60,14 +62,11 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        if (repository.existsById(id)) {
-            try {
-                repository.deleteById(id);
-            } catch (DataIntegrityViolationException e) {
-                throw new DataBaseException("Integrity violation");
-            }
-        } else {
-            throw new ResourceNotFoundException("Id not found " + id);
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataBaseException("Integrity violation");
         }
     }
 

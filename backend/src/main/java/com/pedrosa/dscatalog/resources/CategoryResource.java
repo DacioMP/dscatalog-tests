@@ -1,12 +1,10 @@
 package com.pedrosa.dscatalog.resources;
 
-import com.pedrosa.dscatalog.dto.CategoryDTO;
-import com.pedrosa.dscatalog.services.CategoryService;
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import com.pedrosa.dscatalog.dto.CategoryDTO;
+import com.pedrosa.dscatalog.services.CategoryService;
 
-@EnableSpringDataWebSupport(pageSerializationMode = PageSerializationMode.VIA_DTO)
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {

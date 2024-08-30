@@ -1,19 +1,14 @@
 package com.pedrosa.dscatalog.dto;
 
-import com.pedrosa.dscatalog.entities.Category;
-import com.pedrosa.dscatalog.entities.Product;
-
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ProductDTO implements Serializable {
+import com.pedrosa.dscatalog.entities.Category;
+import com.pedrosa.dscatalog.entities.Product;
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class ProductDTO {
 
     private Long id;
     private String name;

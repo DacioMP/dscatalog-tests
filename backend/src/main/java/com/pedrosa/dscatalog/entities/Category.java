@@ -1,19 +1,20 @@
 package com.pedrosa.dscatalog.entities;
 
-import jakarta.persistence.*;
-
-import java.io.Serial;
-import java.io.Serializable;
-
 import java.time.Instant;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "tb_category")
-public class Category implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +53,17 @@ public class Category implements Serializable {
     public Instant getCreatedAt() { return createdAt; }
 
     public Instant getUpdatedAt() { return updatedAt; }
-
-    public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
-
+    
+    @PrePersist
+    public void prePersist() {
+    	createdAt = Instant.now();
+    }
+    
+    @PreUpdate
+    public void preUpdate() {
+    	updatedAt = Instant.now();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
