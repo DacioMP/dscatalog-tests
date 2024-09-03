@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pedrosa.dscatalog.dto.ProductDTO;
@@ -23,7 +24,7 @@ import jakarta.persistence.EntityNotFoundException;
 public class ProductService {
 
     @Autowired
-    ProductRepository repository;
+    private ProductRepository repository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -60,9 +61,14 @@ public class ProductService {
             throw new ResourceNotFoundException("Id not found " + id);
         }
     }
-
+    
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-
+    	
+    	if (!repository.existsById(id)) {
+    		throw new ResourceNotFoundException("Id not found " + id);
+    	}
+    	
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
