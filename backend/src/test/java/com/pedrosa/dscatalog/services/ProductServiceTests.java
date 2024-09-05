@@ -50,7 +50,7 @@ public class ProductServiceTests {
 	private Category category;
 	
 	@BeforeEach
-	public void setUp() throws Exception {
+	private void setUp() throws Exception {
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
